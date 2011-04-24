@@ -310,10 +310,10 @@ static int cfs_flush(const char *path, struct fuse_file_info *info)
   return 0;
 }
 
+/* Called, for example, upon losetup -d FILE */
 static int cfs_release(const char *path, struct fuse_file_info *info)
 {
-  close(((openfile *)(uintptr_t)info->fh)->fd);
-  return 0;
+  return cfs_flush(path, info);
 }
 
 static int cfs_rmdir(const char *path)
